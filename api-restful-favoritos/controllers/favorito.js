@@ -1,6 +1,6 @@
 'use strict'
 
-var favorito = require('../models/favorito');
+var Favorito = require('../models/favorito');
 
 function prueba(req, res) {
 
@@ -18,10 +18,32 @@ function prueba(req, res) {
 
 function getFavorito (req, res) {
 	var favoritoId = req.params.id;
-	res.status(200).send({data: favoritoId});
+
+	Favorito.findById(favoritoId, (err, favorito) => {
+		if(err){
+			res.status(500).send({message: 'Error al devolver el favorirto'})
+		} else {
+			if (!favorito){
+				res.status(404).send({message: 'No hay favoritos'})
+			} else {
+				res.status(200).send({favorito});
+			}
+		}
+	})
 }
 
 function getFavoritos (req, res) {
+	Favorito.find({}).sort('title').exec((err, favoritos) => {
+		if(err){
+			res.status(500).send({message: 'Error al devolver los favorirtos'})
+		} else {
+			if (!favoritos){
+				res.status(404).send({message: 'No hay favoritos'})
+			} else {
+				res.status(200).send({favoritos});
+			}
+		}
+	});
 }
 
 function saveFavorito (req, res) {
@@ -38,17 +60,42 @@ function saveFavorito (req, res) {
 			res.status(500).send({message: 'Error al guardar el marcador'})
 		}
 			res.status(200).send({favorito: obj})
-	})
+	});
 }
 
 function updateFavorito (req, res) {
-	var params = req.body;
-	res.status(200).send({update: true, favorito: params})
+	var favoritoId = req.params.id;
+	var update = req.body;
+
+	Favorito.findByIdAndUpdate(favoritoId, update, (err, favoritoUpdated) => {
+		if(err){
+			res.status(500).send({message: 'Error al actualizar el favorirtoo'})
+		}
+		res.status(200).send({favorito: favoritoUpdated});
+	});
 }
 
 function deleteFavorito (req, res) {
-	var params = req.body;
-	res.status(200).send({delete: true, favorito: params})
+	var favoritoId = req.params.id;
+
+	Favorito.findById(favoritoId, (err, favorito) => {
+		if(err){
+			res.status(500).send({message: 'Error al buscar el favorirto'})
+		}
+
+		if (!favorito){
+			res.status(404).send({message: 'No hay favorito con ese Id'})
+		} else {
+			favorito.remove(err => {
+				if(err){
+					res.status(500).send({message: 'Error al borrar el favorito'})
+				}else{					
+					res.status(404).send({message: 'El favorito se ha eliminado!!'})
+				}
+			})
+		}
+
+	});
 }
 
 module.exports = {
