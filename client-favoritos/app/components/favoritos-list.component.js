@@ -10,27 +10,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var favorito_service_1 = require("../services/favorito.service");
 var FavoritosListComponent = (function () {
-    function FavoritosListComponent() {
+    function FavoritosListComponent(_favoritoService) {
+        this._favoritoService = _favoritoService;
         this.title = 'Listado de marcadores';
-        this.color = 'red';
-        this.favoritos = ["bbva.es", "marca.es", "gmail.com", "google.com"];
-        this.favoritosVisibles = false;
+        this.loading = true;
     }
-    FavoritosListComponent.prototype.toogleFavoritos = function () {
-        this.favoritosVisibles = !this.favoritosVisibles;
-    };
-    FavoritosListComponent.prototype.changeColor = function () {
-        console.log(this.color);
+    FavoritosListComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        console.log('FavoritosListComponent cargado!!');
+        this._favoritoService.getFavoritos().subscribe(function (result) {
+            console.log(result);
+            _this.favoritos = result.favoritos;
+            if (!_this.favoritos) {
+                alert('Error en el servidor');
+            }
+            else {
+                _this.loading = false;
+            }
+        }, function (error) {
+            _this.errorMessage = error;
+            if (_this.errorMessage != null) {
+                console.log(_this.errorMessage);
+                alert('Error en la petición');
+            }
+        });
     };
     return FavoritosListComponent;
 }());
 FavoritosListComponent = __decorate([
     core_1.Component({
         selector: 'favoritos-list',
-        templateUrl: 'app/views/favoritos-list.html'
+        templateUrl: 'app/views/favoritos-list.html',
+        providers: [favorito_service_1.FavoritoService]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [favorito_service_1.FavoritoService])
 ], FavoritosListComponent);
 exports.FavoritosListComponent = FavoritosListComponent;
 //# sourceMappingURL=favoritos-list.component.js.map

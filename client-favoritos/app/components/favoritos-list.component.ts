@@ -1,29 +1,50 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute, Params} from '@angular/router';
+
+import {FavoritoService} from '../services/favorito.service';
+import {Favorito} from '../models/favorito';
 
 @Component({
 		selector: 'favoritos-list',
-		templateUrl: 'app/views/favoritos-list.html'
+		templateUrl: 'app/views/favoritos-list.html',
+		providers: [FavoritoService]
 })
 
-export class FavoritosListComponent {
+export class FavoritosListComponent implements OnInit{
 	public title: string;
-	public color: string;
-	public favoritos: Array<string>;
-	public favoritosVisibles: boolean;
+	public loading: boolean;
 
-	constructor(){
+	public favoritos: Favorito[];
+	public errorMessage;
+
+	constructor(
+			private _favoritoService: FavoritoService
+		){
 		this.title = 'Listado de marcadores';
-		this.color = 'red';
-		this.favoritos = ["bbva.es","marca.es","gmail.com","google.com"];
-		this.favoritosVisibles = false;
+		this.loading = true;
 	}
 
-		toogleFavoritos(){
-			this.favoritosVisibles = !this.favoritosVisibles;
-		}
+	ngOnInit(){
+		console.log('FavoritosListComponent cargado!!');
+		this._favoritoService.getFavoritos().subscribe(
+					result => {
+						console.log(result);
+						this.favoritos = result.favoritos;
 
-		changeColor(){
-			console.log(this.color);
-		}
+						if(!this.favoritos){
+							alert('Error en el servidor')
+						} else {
+							this.loading = false;
+						}
+					},
+					error => {
+						this.errorMessage = <any>error;
+						if(this.errorMessage != null){
+							console.log(this.errorMessage);
+							alert('Error en la petición');
+						}
+					},
+			);
+	}
 			
 }

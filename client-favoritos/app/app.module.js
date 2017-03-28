@@ -9,8 +9,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
+var http_1 = require("@angular/http");
+var app_routing_1 = require("./app.routing");
 var app_component_1 = require("./app.component");
 var favoritos_list_component_1 = require("./components/favoritos-list.component");
+var favoritos_details_component_1 = require("./components/favoritos-details.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -18,11 +21,17 @@ var AppModule = (function () {
 }());
 AppModule = __decorate([
     core_1.NgModule({
-        imports: [platform_browser_1.BrowserModule, forms_1.FormsModule],
+        imports: [platform_browser_1.BrowserModule,
+            forms_1.FormsModule,
+            http_1.HttpModule,
+            app_routing_1.routing
+        ],
         declarations: [
             app_component_1.AppComponent,
-            favoritos_list_component_1.FavoritosListComponent
+            favoritos_list_component_1.FavoritosListComponent,
+            favoritos_details_component_1.FavoritoDetailsComponent
         ],
+        providers: [app_routing_1.appRoutingProviders],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);
