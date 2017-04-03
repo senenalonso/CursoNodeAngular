@@ -90,7 +90,7 @@ function deleteFavorito (req, res) {
 				if(err){
 					res.status(500).send({message: 'Error al borrar el favorito'})
 				}else{					
-					res.status(404).send({message: 'El favorito se ha eliminado!!'})
+					res.status(200).send({message: 'El favorito se ha eliminado!!'})
 				}
 			})
 		}
