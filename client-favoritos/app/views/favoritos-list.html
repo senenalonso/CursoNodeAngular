@@ -11,7 +11,7 @@
 				<a href="{{favorito.url}}" target="_blank" class="btn 
 				btn-default">Ir al marcador</a>
 				<a [routerLink]="['/marcador', favorito._id]" class="btn btn-ver">Ver</a>
-				<a href="{{favorito.url}}" target="_blank" class="btn btn-editar">Editar</a>
+				<a [routerLink]="['/editar-marcador', favorito._id]" class="btn btn-editar">Editar</a>
 				<a href="{{favorito.url}}" target="_blank" class="btn btn-eliminar">Eliminar</a>
 		</p>
 		</div>
