@@ -8,7 +8,7 @@ var multipart = require('connect-multiparty');
 var multiparMiddleware = multipart({uploadDir: './uploads'});
 
 
-api.get('/prueba-image', ImageController.pruebas);
+
 api.get('/images/:album?', ImageController.getImages);
 api.get('/image/:id', ImageController.getImage);
 api.put('/image/:id', ImageController.updateImage);
@@ -17,5 +17,8 @@ api.post('/image', ImageController.saveImage);
 
 
 api.post('/upload-image/:id', multiparMiddleware, ImageController.uploadImage);
+api.get('/get-image-file/:imageFile', multiparMiddleware, ImageController.getImageByFile);
+api.get('/get-image/:id', multiparMiddleware, ImageController.getImageById);
+
 
 module.exports = api;

@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 
 // configurar cabeceras
-/*app.use((req, res, next) =>{
+app.use((req, res, next) =>{
 	res.header('Access-Control-Allow-Origin','*');
 	res.header('Access-Control-Allow-Headers',
 							'X-API-KEY, Origin, X-Requested-With, Content-type, Accept, Access-Control-Request-Method');
@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 
 	next();
 })
-*/
+
 
 //rutas base
 app.use ('/api', album_routes);
