@@ -1,0 +1,30 @@
+{
+  "name": "api-restful-albums",
+  "version": "1.0.0",
+  "description": "Proyecto API Rest para app de albums",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/senenalonso/apiAlbums.git"
+  },
+  "keywords": [
+    "node",
+    "angular",
+    "express"
+  ],
+  "author": "Senén Alonso",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.0",
+    "connect-multiparty": "^2.0.0",
+    "express": "^4.15.2",
+    "mongoose": "^4.8.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
